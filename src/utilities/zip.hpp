@@ -1,3 +1,8 @@
+#pragma once
+
+#include <tuple>
+
+#include "utilities/tuple_utilities.hpp"
 
 namespace projectT1::utilities::tuple {
 
@@ -10,9 +15,7 @@ public:
     std::tuple<Args&...> data;
 
     zip(Args& ...args)
-        : data(args...) {
-
-    }
+        : data(args...) { }
 
     class iterator : public std::iterator<
         std::input_iterator_tag(),
@@ -26,16 +29,11 @@ public:
         inline iterator(iterator_t & it) : it(it) {};
 
         inline value_type_ref operator*() {
-            //            value_type ret;
-            // std::cout << __PRETTY_FUNCTION__ << typeid(value_type_ref).name() << "\n";
             return std::apply(
                 [](auto& ...x) {
-                    std::cout << "asda<dadsads" << std::endl;
-                    //std::cout << *(x)...;
                     return std::forward_as_tuple(*(x)...);
                 },
                 it);
-            //            return ret;
         }
 
         inline iterator_t& get() {
@@ -62,7 +60,6 @@ public:
         }
 
         bool operator==(const iterator & other) const {
-            //return it == other.it;
             return any_equal(it, other.it);
         }
 
@@ -70,15 +67,6 @@ public:
             return !(*this == other);
         }
 
-
-        //    it == other.it)
-
-        //    return iterator(std::apply(
-        //        [](auto&& ...x) {
-        //            return std::make_tuple(x.begin()...);
-        //        }, data
-        //    ));
-        //}
     };
 
     iterator begin() {
@@ -109,5 +97,10 @@ public:
     //    return const_iterator();
     //}
 };
+
+template <class ...Args>
+zip<Args...> make_zip(Args& ...args) {
+    return zip<Args...>(args...);
+}
 
 }

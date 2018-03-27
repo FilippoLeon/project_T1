@@ -1,9 +1,7 @@
 #include <benchmark/benchmark.h>
 
-#include <iostream>
 #include <vector>
-#include <tuple>
-#include <utility>
+#include <iostream>
 
 #include "kernels/apply.hpp"
 #include "kernels/basic_kernels.hpp"
@@ -16,7 +14,7 @@ int main() {
     std::vector<int> v1{ 1, 2, 3 };
     std::vector<double> v2{ 3, 2, 4, 5, 7, 8 };
 
-    apply_kern<KernScalarProduct<int>>(v1, v2);
+    projectT1::kernels::apply_kern<projectT1::kernels::KernScalarProduct<int>>(v1, v2);
 
     std::cin.get();
 }
